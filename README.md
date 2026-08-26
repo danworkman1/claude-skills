@@ -6,6 +6,7 @@ Personal collection of [Claude Code](https://claude.com/claude-code) skills, sha
 
 | Skill | What it does |
 |---|---|
+| [`feature-audit`](skills/feature-audit/SKILL.md) | Walk recently merged features through a real browser against a live dev server. Turns git history into a test charter, drives each feature via the chrome-devtools MCP with file-backed state, and reports pass/fail with evidence. Read-only on the codebase — it verifies and records, never fixes. |
 | [`dedupe`](skills/dedupe/SKILL.md) | Find duplicated code left by big refactors or AI output, then plan its removal. Detects mechanically (jscpd + grep), recommends consolidate-vs-leave per the meaning-not-shape rule, and hands the approved list off to a doc to action later. Plans only — doesn't edit code in the same session. |
 | [`run-hindsight`](skills/run-hindsight/SKILL.md) | Drive the `hindsight` post-implementation review CLI — diffs the current branch against a base and sends it to Claude for review. Requires the `hindsight` CLI installed globally. |
 
