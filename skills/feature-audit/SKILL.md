@@ -39,6 +39,22 @@ If the window contains the app itself landing, the PR list understates the
 surface: start the server, run a discovery crawl (routes, nav, modals, forms)
 and add a feature entry per discovered flow before testing anything.
 
+Also record each PR's CI status (`gh pr checks <n>`) in `progress.md`. It is
+context, never a criterion — a red check does not block the audit, and often is
+the reason to run one: you want to know whether a failing test corresponds to
+anything a user would see. But a bare "7/7 pass" with no CI line reads as
+"ready to merge", which is not what the audit measured.
+
+### Shared-package changes are audited at every consumer, behaviourally
+
+If the window touches `packages/`, list the apps that import the changed code
+and give each one features that exercise what the shared code _does_. "Client X
+looks unchanged" is a layout assertion, and a shared query builder or hook can
+be inert on screen while regressed underneath.
+
+Derive those entries by reading the callers, never from the PR's own claim that
+a client is unaffected — that claim is the thing under test.
+
 ## Authenticated flows
 
 Guest flows run on the default `chrome-devtools` MCP (headless, isolated).
@@ -73,6 +89,10 @@ workspace files are the memory, so resuming costs one read.
 When nothing is `untested`, publish `findings.md` as an artifact: pass/fail
 table, each failure with its evidence, blocked items with reasons.
 
+Open the report by stating what was covered — which apps, which lane, which
+window — and the CI status recorded at charter time. The pass count means
+nothing without the scope it was measured over.
+
 ## Common mistakes
 
 - Checking out old commits to test them — rebuilds, schema drift, wasted hours.
@@ -82,3 +102,5 @@ table, each failure with its evidence, blocked items with reasons.
   separate, ticketed work.
 - Trusting the screenshot alone — half of what's broken only shows in the
   console or a failed request.
+- Building the feature list from what the PR says it changed. "Client X is
+  unaffected" is a hypothesis to test, not a scope reduction to accept.
